@@ -12,7 +12,8 @@ import sys
 import pickle
 
 global t
-
+global hashtags
+sample_size = 4
 ###########################################
 # GET HELP ABOUT DEFAULT METHODS: help(t) #
 ###########################################
@@ -86,15 +87,18 @@ def set_parameters(user,filename = "twitter_counts.txt"):
 
         return t
 
-def set_params():
+def set_params(n=""):
 	users = get_usrIDs()
-	print("\n    AVAILIBLE PROFILES:")
-	for i in range(len(users)):
-		print "[" + str(i) + "]", users[i]
-	index = int(raw_input("\nPlease select one user (number): "))
+	if n == "":
+		print("\n    AVAILIBLE PROFILES:")
+		for i in range(len(users)):
+			print "[" + str(i) + "]", users[i]
+		index = int(raw_input("\nPlease select one user (number): "))
+	else:
+		index = n
 	username = users[index]
 	t = set_parameters(users[index])
-	return t
+	return t,username
 
 
 def shuffle(items):  # mutates input list
@@ -208,7 +212,7 @@ def wrap_favs(user_db,user,t):
         #global termino
         #if termino == "":
         terms = hashtags[user]
-        terms = random.sample(terms,3)
+        terms = random.sample(terms,sample_size)
         #termino = raw_input("\nKeyword for searching? ")
                         
         # perform a search and get user ids:
